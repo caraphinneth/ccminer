@@ -1520,6 +1520,8 @@ static bool gbt_work_decode_full(const json_t *val, struct work *work)
 	}
 	for (i = 0; i < ARRAY_SIZE(work->target); i++)
 		work->target[7 - i] = be32dec(target + i);
+	applog(LOG_BLUE, "Current diff is %.1f", target_to_diff (work->target));
+	
 	tmp = json_object_get(val, "workid");
 	if (tmp) {
 		if (!json_is_string(tmp)) {
