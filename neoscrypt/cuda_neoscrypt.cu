@@ -672,7 +672,7 @@ uint4 salsa_small_scalar_rnd(const uint4 X)
 {
 	uint4 state = X;
 
-	#pragma nounroll
+	#pragma unroll 1
 	for (int i = 0; i < 10; i++) {
 		SALSA_CORE(state);
 	}
@@ -685,7 +685,7 @@ uint4 chacha_small_parallel_rnd(const uint4 X)
 {
 	uint4 state = X;
 
-	#pragma nounroll
+	#pragma unroll 1
 	for (int i = 0; i < 10; i++) {
 		CHACHA_CORE_PARALLEL(state);
 	}
@@ -1042,7 +1042,7 @@ uint32_t fastkdf32_v1(uint32_t thread, const uint32_t nonce, uint32_t* const sal
 	uint32_t qbuf, rbuf, bitbuf;
 	uint32_t temp[9];
 
-	#pragma nounroll
+	#pragma unroll 1
 	for (int i = 0; i < 31; i++)
 	{
 		Blake2S(input, input, key);
@@ -1157,7 +1157,7 @@ uint32_t fastkdf32_v3(uint32_t thread, const uint32_t nonce, uint32_t* const sal
 	uint32_t qbuf, rbuf, bitbuf;
 	uint32_t temp[9];
 
-	#pragma nounroll
+	#pragma unroll 1
 	for (int i = 0; i < 31; i++)
 	{
 		Blake2S_v2(input, input, key);
@@ -1357,7 +1357,7 @@ void neoscrypt_gpu_hash_chacha1()
 		X[i].w = __ldg((uint32_t*)&(Input + shiftTr)[i * 2] + 3 * 4 + threadIdx.x);
 	}
 
-	#pragma nounroll
+	#pragma unroll 1
 	for (int i = 0; i < 128; i++)
 	{
 		uint32_t offset = 8U * (thread + threads * i);
@@ -1366,7 +1366,7 @@ void neoscrypt_gpu_hash_chacha1()
 		neoscrypt_chacha(X);
 	}
 
-	#pragma nounroll
+	#pragma unroll 1
 	for (int t = 0; t < 128; t++)
 	{
 		uint32_t offset = 8U * (thread + threads * (WarpShuffle(X[3].x, 0, 4) & 0x7F));
@@ -1402,7 +1402,7 @@ void neoscrypt_gpu_hash_salsa1()
 		Z[i].w = __ldg((uint32_t*)&(Input + shiftTr)[i * 2] + ((3 + threadIdx.x) & 3) * 4 + threadIdx.x);
 	}
 
-	#pragma nounroll
+	#pragma unroll 1
 	for (int i = 0; i < 128; i++)
 	{
 		uint32_t offset = 8U * (thread + threads * i);
@@ -1411,7 +1411,7 @@ void neoscrypt_gpu_hash_salsa1()
 		neoscrypt_salsa(Z);
 	}
 
-	#pragma nounroll
+	#pragma unroll 1
 	for (int t = 0; t < 128; t++)
 	{
 		uint32_t offset = 8U * (thread + threads * (WarpShuffle(Z[3].x, 0, 4) & 0x7F));

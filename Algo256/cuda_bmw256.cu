@@ -113,7 +113,7 @@ void Compression256(uint32_t *  M32)
 	for (int i=16; i<18; i++)
 		Q[i] = expand32_1(i, M32, H, Q);
 
-	#pragma nounroll
+	#pragma unroll 1
 	for (int i=18; i<32; i++)
 		Q[i] = expand32_2(i, M32, H, Q);
 
@@ -203,7 +203,7 @@ void Compression256_2(uint32_t *  M32)
 	for (int i = 16; i<18; i++)
 		Q[i] = expand32_1(i, M32, H, Q);
 
-	#pragma nounroll
+	#pragma unroll 1
 	for (int i = 18; i<32; i++)
 		Q[i] = expand32_2(i, M32, H, Q);
 
