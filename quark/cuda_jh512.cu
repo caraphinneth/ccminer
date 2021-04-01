@@ -92,7 +92,7 @@ static void SWAP1(uint32_t &x) {
 
 __device__ __forceinline__
 static void SWAP4x4(uint32_t *x) {
-	#pragma unroll 1
+	#pragma nounroll
 	// y is used as tmp register too
 	for (uint32_t y=0; y<4; y++, ++x) {
 		asm("and.b32 %1, %0, 0xF0F0F0F0;\n\t"
@@ -104,7 +104,7 @@ static void SWAP4x4(uint32_t *x) {
 
 __device__ __forceinline__
 static void SWAP2x4(uint32_t *x) {
-	#pragma unroll 1
+	#pragma nounroll
 	// y is used as tmp register too
 	for (uint32_t y=0; y<4; y++, ++x) {
 		asm("and.b32 %1, %0, 0xCCCCCCCC;\n\t"
@@ -116,7 +116,7 @@ static void SWAP2x4(uint32_t *x) {
 
 __device__ __forceinline__
 static void SWAP1x4(uint32_t *x) {
-	#pragma unroll 1
+	#pragma nounroll
 	// y is used as tmp register too
 	for (uint32_t y=0; y<4; y++, ++x) {
 		asm("and.b32 %1, %0, 0xAAAAAAAA;\n\t"
